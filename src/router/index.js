@@ -8,6 +8,7 @@ const FrontendLayout = () => import('../layouts/FrontendLayout')
 // /* Dashboards View */
 const Dashboard = () => import('../views/BackendPages/Dashboard.vue')
 const Shop = () => import('../views/FrontendPages/ShopPage.vue')
+const Games = () => import('../views/FrontendPages/GamesPage.vue')
 // const Rating = () => import('../views/BackendPages/Rating.vue')
 // const Comments = () => import('../views/BackendPages/Comment.vue')
 // const PricingPage = () => import('../views/BackendPages/Pricing.vue')
@@ -98,36 +99,57 @@ const LandingPage = () => import('../views/FrontendPages/MainPage.vue')
 Vue.use(VueRouter)
 
 const childRoutes = (prop) => [
+  // {
+  //   path: '',
+  //   redirect: { name: 'landing-page.landing-page' }
+  //   // name: prop + '.shop',
+  //   // meta: { auth: true, name: 'shop' },
+  //   // component: Shop
+  // },
+  {
+    path: '/shop',
+    name: prop + '.shop',
+    meta: { auth: true, name: 'shop' },
+    component: Shop
+  },
+  {
+    path: '/game',
+    redirect: { name: 'landing-page.landing-page' }
+    // name: prop + '.game',
+    // meta: { auth: true, name: 'shop' },
+    // component: Shop
+  },
+  {
+    path: '/game/:name',
+    name: prop + '.game',
+    meta: { auth: true, name: 'game' },
+    component: Games
+  },
   {
     path: 'dashboard',
     name: prop + '.dashboard',
     meta: { auth: true, name: 'dashboard' },
     component: Dashboard
-  },
-  {
-    path: '/',
-    name: prop + '.shop',
-    meta: { auth: true, name: 'shop' },
-    component: Shop
   }
-//   {
-//     path: 'rating',
-//     name: prop + '.rating',
-//     meta: { auth: true, name: 'Rating' },
-//     component: Rating
-//   },
-//   {
-//     path: 'comment',
-//     name: prop + '.comment',
-//     meta: { auth: true, name: 'Comment' },
-//     component: Comments
-//   },
-//   {
-//     path: 'pricing',
-//     name: prop + '.pricing',
-//     meta: { auth: true, name: 'Pricing' },
-//     component: PricingPage
-//   }
+
+  //   {
+  //     path: 'rating',
+  //     name: prop + '.rating',
+  //     meta: { auth: true, name: 'Rating' },
+  //     component: Rating
+  //   },
+  //   {
+  //     path: 'comment',
+  //     name: prop + '.comment',
+  //     meta: { auth: true, name: 'Comment' },
+  //     component: Comments
+  //   },
+  //   {
+  //     path: 'pricing',
+  //     name: prop + '.pricing',
+  //     meta: { auth: true, name: 'Pricing' },
+  //     component: PricingPage
+  //   }
 ]
 // const categoryRoute = (prop) => [
 //   {
@@ -587,7 +609,7 @@ const routes = [
   //   children: childRoutes('dashboard')
   // },
   {
-    path: '/',
+    path: '',
     name: 'landing-page',
     component: FrontendLayout,
     meta: { auth: true },
@@ -599,7 +621,22 @@ const routes = [
     component: FrontendLayout,
     meta: { auth: true },
     children: childRoutes('shop')
+  },
+  {
+    path: '/game',
+    name: 'game',
+    component: FrontendLayout,
+    meta: { auth: true },
+    children: childRoutes('game')
+  },
+  {
+    path: '*',
+    name: '404',
+    redirect: { name: 'landing-page.landing-page' },
+    // component: FrontendLayout,
+    // children: landingPageRoutes('landing-page')
   }
+
   // {
   //   path: '/comment',
   //   name: 'comment',
